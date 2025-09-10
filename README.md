@@ -39,3 +39,7 @@ git clone https://github.com/terra2o/interactive-js-counter.git
 cd interactive-js-counter
 # Open 'index.html' in your web browser
 ```
+
+## Warning
+
+I did not care about mobile devices while making this. It will look cramped on a mobile device. Tablets are probably fine.
