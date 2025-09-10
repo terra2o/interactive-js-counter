@@ -1,0 +1,66 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Counter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- History panel for tracking counter changes -->
+    <div class="container-history" id="history-panel">
+        <button class="history-toggle" id="history-toggle">◀</button>
+        <h2>History</h2>
+        <div class="history-text">
+            <ul id="history-log"></ul>
+        </div>
+    </div>
+    
+    <!-- Theme selection controls -->
+    <div class="theme-toggle-container">
+        <button class="theme-button" id="light-mode-btn" title="Light Mode">☀️</button>
+        <button class="theme-button" id="dark-mode-btn" title="Dark Mode">🌙</button>
+    </div>
+    
+    <!-- Settings popup trigger -->
+    <button class="popup-button" id="popup-button">⚙️</button>
+
+    <!-- Settings popup for configuring counter limits -->
+    <div class="popup-container" id="popup-container">
+        <div class="popup-content">
+            <button class="popup-close" id="popup-close">×</button>
+            <h2 class="popup-title">Settings</h2>
+            <div class="popup-text">
+                <span class="limit-label">Set Counter Limit</span>
+                <input type="number" id="limit-size" value="10" min="1">
+                <div class="limit-instruction">Counter will be limited between -value and +value</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main counter interface -->
+    <div class="container">
+        <h1>Counter</h1>
+        <span id="counter-value">0</span>
+        <div class="button-container">
+            <button id="decrement-btn">-</button>
+            <button id="reset-btn">Reset</button>
+            <button id="increment-btn">+</button>
+        </div>
+        <div class="button-container2">
+            <button id="decrement5-btn">-5</button>
+            <button id="increment5-btn">+5</button>
+        </div>
+    </div>
+    
+    <!-- Keyboard shortcut information -->
+    <div class="note-container">
+        <div class="note">
+            <strong>Note:</strong> You can use + and - on your keyboard instead of using the buttons!
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

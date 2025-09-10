@@ -1,0 +1,491 @@
+/* style.css */
+/* Counter application styles with theme support */
+
+/* Base styles and CSS custom properties for theming */
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: var(--bg-color);
+    position: relative;
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Remove spinner controls from number input */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+/* Light theme as default */
+:root {
+    --bg-color: #f4f4f4;
+    --container-bg: white;
+    --text-color: #333;
+    --history-bg: white;
+    --popup-bg: white;
+    --button-bg: #4b6cb7;
+    --button-hover: #3a559d;
+    --border-color: #e0e0e0;
+    --history-text: #555;
+    --history-border: #eee; 
+}
+
+/* Dark theme variables */
+[data-theme="dark"] {
+    --bg-color: #1a1a1a;
+    --container-bg: #2d2d2d;
+    --text-color: #f0f0f0;
+    --history-bg: #2d2d2d;
+    --popup-bg: #2d2d2d;
+    --button-bg: #5a7bc8;
+    --button-hover: #4a6bb8;
+    --border-color: #444;
+    --history-text: #e0e0e0;
+    --history-border: #555;
+}
+
+/* Theme toggle button container */
+.theme-toggle-container {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 1000;
+}
+
+.theme-button {
+    background-color: var(--button-bg);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.theme-button:hover {
+    background-color: var(--button-hover);
+    transform: scale(1.05);
+}
+
+/* Specific styles for light/dark mode buttons */
+#light-mode-btn {
+    background-color: #ffd700;
+}
+
+#light-mode-btn:hover {
+    background-color: #ffc400;
+}
+
+#dark-mode-btn {
+    background-color: #2c3e50;
+}
+
+#dark-mode-btn:hover {
+    background-color: #1e2a36;
+}
+
+/* Main counter container */
+.container {
+    text-align: center;
+    background-color: var(--container-bg);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
+    transition: background-color 0.3s ease;
+}
+
+/* History panel styles */
+.container-history {
+    text-align: center;
+    background-color: var(--history-bg);
+    padding: 1rem;
+    border-radius: 0 10px 10px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 300px;
+    height: 100vh;
+    z-index: 1001;
+    transition: transform 0.3s ease-in-out, background-color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Collapsed history panel state */
+.container-history.collapsed {
+    transform: translateX(-270px);
+    transition: all 0.3s ease;
+}
+
+.container-history.collapsed:hover {
+    transform: translateX(-250px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15), 
+        0 0 15px rgba(75, 108, 183, 0.4);
+    transition: all 0.3s ease;
+}
+
+/* History toggle button */
+.history-toggle {
+    position: absolute;
+    top: 20px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--button-bg);
+    padding: 5px;
+    border-radius: 4px;
+    z-index: 3;
+    transition: all 0.3s ease;
+}
+
+.history-toggle:hover {
+    background-color: var(--border-color);
+    transform: translateY(2px);
+}
+
+.history-toggle:active {
+    transform: translateY(4px);
+    transition: transform 0.1s ease;
+}
+
+/* Rotate toggle button when panel is collapsed */
+.container-history.collapsed .history-toggle {
+    transform: rotate(180deg) translateX(0);
+    right: 15px;
+    background-color: transparent;
+}
+
+.container-history.collapsed .history-toggle:hover {
+    transform: rotate(180deg) translateY(2px);
+    background-color: var(--border-color);
+}
+
+.container-history.collapsed .history-toggle:active {
+    transform: rotate(180deg) translateY(4px);
+}
+
+/* History content layout */
+.container-history h2 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    padding-right: 30px;
+    height: auto;
+}
+
+#history-log {
+    color: var(--history-text);
+    font-size: 0.9rem;
+    text-align: left;
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+    flex: 1;
+    max-height: auto;
+}
+
+#history-log li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--history-border);
+}
+
+/* Dark mode scrollbar styling */
+[data-theme="dark"] #history-log::-webkit-scrollbar-track {
+    background: #2a2a2a;
+}
+
+[data-theme="dark"] #history-log::-webkit-scrollbar-thumb {
+    background: #555;
+}
+
+[data-theme="dark"] #history-log::-webkit-scrollbar-thumb:hover {
+    background: #666;
+}
+
+/* Hide history content when collapsed */
+.container-history.collapsed h2,
+.container-history.collapsed .history-text {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+}
+
+.container-history h2,
+.container-history .history-text {
+    opacity: 1;
+    transition: opacity 0.3s ease 0.1s;
+    pointer-events: auto;
+}
+
+/* Custom scrollbar for history log */
+#history-log::-webkit-scrollbar {
+    width: 6px;
+}
+
+#history-log::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+#history-log::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+#history-log::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* Counter value display */
+#counter-value {
+    display: block;
+    font-size: 4rem;
+    font-weight: bold;
+    color: #333;
+    margin: 1rem 0;
+}
+
+/* Bump animation for counter changes */
+.bump {
+    animation: bump 0.3s ease;
+}
+
+@keyframes bump {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* Button container layouts */
+.button-container {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.button-container2 {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+/* Base button styles */
+button {
+    padding: 0.7rem 1.5rem;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Button color variants */
+#decrement-btn, #decrement5-btn {
+    background-color: #ff5252;
+    color: white;
+}
+
+#decrement-btn:hover, #decrement5-btn:hover {
+    background-color: #ff0000;
+}
+
+#reset-btn {
+    background-color: #9e9e9e;
+    color: white;
+}
+
+#reset-btn:hover {
+    background-color: #757575;
+}
+
+#increment-btn, #increment5-btn {
+    background-color: #4caf50;
+    color: white;
+}
+
+#increment-btn:hover, #increment5-btn:hover {
+    background-color: #2e7d32;
+}
+
+/* Settings popup button */
+.popup-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #4b6cb7;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-button:hover {
+    background-color: #3a559d;
+}
+
+/* Settings popup container */
+.popup-container {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    width: 320px;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+}
+
+.popup-container.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Popup content styling */
+.popup-content {
+    background-color: var(--popup-bg);
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    transition: background-color 0.3s ease;
+}
+
+.popup-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    background: none;
+    border: none;
+    border-radius: 50%;
+    color: #777;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.popup-close:hover {
+    color: #333;
+    background-color: #f0f0f0;
+    border-radius: 50%;
+}
+
+.popup-title {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #4b6cb7;
+    font-size: 1.4rem;
+}
+
+.popup-text {
+    line-height: 1.6;
+    color: #555;
+}
+
+/* Limit input field styling */
+#limit-size {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 1.1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--container-bg);
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    text-align: center;
+    margin: 10px 0;
+}
+
+/* Theme-aware text colors */
+.limit-label, .popup-title, .popup-text {
+    color: var(--text-color);
+}
+
+#limit-size:focus {
+    outline: none;
+    border-color: #4b6cb7;
+    background-color: #fff;
+    box-shadow: 0 0 0 3px rgba(75, 108, 183, 0.2);
+}
+
+#limit-size:hover {
+    border-color: #b3b3b3;
+}
+
+.limit-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #4b6cb7;
+    text-align: center;
+}
+
+.limit-instruction {
+    font-size: 0.9rem;
+    color: #777;
+    text-align: center;
+    margin-top: 8px;
+    font-style: italic;
+}
+
+/* Keyboard shortcut note panel */
+.note-container {
+    position: fixed;
+    bottom: 20px;
+    background-color: var(--container-bg);
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    transition: all 0.3s ease;
+    transform: translateY(0);
+}
+
+.note-container:hover {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15), 
+         0 0 15px rgba(75, 108, 183, 0.4);
+    transition: box-shadow 0.3s ease;
+    transition: all 0.3s ease;
+    transform: translateY(-5px);
+    z-index: 999;
+}
